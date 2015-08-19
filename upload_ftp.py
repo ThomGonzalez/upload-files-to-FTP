@@ -1,30 +1,53 @@
 # -*- coding: cp1252 -*-
-
 import ftplib
 import os
 
-# Datos FTP
-ftp_servidor = 'server'
-ftp_usuario  = 'user'
-ftp_clave    = 'pass'
-ftp_raiz     = '/public_html' # Carpeta del servidor donde queremos subir el fichero
 
-# Datos del fichero a subir
-# Ruta al fichero que vamos a subir
+class Base(object):
+	'''
+	Datos FTP
+	'''
+	_ftp_servidor = 'server'
+	_ftp_usuario = 'user'
+	_ftp_password = 'pass'
+	_ftp_raiz = '/public_html'
+
+	def __init__(self, filenames=None):
+		self.fichero_origen = filenames
+
+	def conexion(self):
+		''' 
+		Conectamos con el servidor 
+		'''
+		try:
+			server = ftplib.FTP(self._ftp_servidor, self._ftp_usuario, self._ftp_password)
+			try:
+				files = open(self.fichero_origen, 'rb')
+				server.cwd(self._ftp_raiz)
+				server.storbinary('STOR ' + 'mifichero.zip', files)
+				files.close()
+				server.quit()
+			except:
+				print('No se ha podido encontrar el fichero %s') %(self.fichero_origen,)
+		except:
+			print('No se ha podido conectar al servidor %s') %(self._ftp_servidor,)
+
+		return True
+
+
+class UploadFile(Base):
+
+	_estatus = None
+
+	def __init__(self, **kwargs):
+		super(UploadFile, self).__init__(**kwargs)
+		self._estatus = self.conexion()
+
+	@property
+	def data(self):
+	    return self._estatus
+	
+# Ruta del fichero
 fichero_origen = r'C:/apache-maven-3.2.5-bin.zip'
-
-fichero_destino = 'mifichero.zip' # Nombre que tendrá el fichero en el servidor
- 
-# Conectamos con el servidor
-try:
-	s = ftplib.FTP(ftp_servidor, ftp_usuario, ftp_clave)
-	try:
-		f = open(fichero_origen, 'rb')
-		s.cwd(ftp_raiz)
-		s.storbinary('STOR ' + fichero_destino, f)
-		f.close()
-		s.quit()
-	except:
-		print("No se ha podido encontrar el fichero")+fichero_origen
-except:
-	print("No se ha podido conectar al servidor")+ftp_servidor
+upload = UploadFile(filenames=fichero_origen).data
+print(upload)
