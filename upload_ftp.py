@@ -2,6 +2,7 @@
 import ftplib
 import os
 
+
 class Base(object):
 	''' Datos FTP para subir archivos al servidor.'''
 	_ftp_servidor = 'server'
@@ -48,19 +49,16 @@ class Base(object):
 
 class UploadFile(Base):
 
-	_estatus = None
-
 	def __init__(self, **kwargs):
 		super(UploadFile, self).__init__(**kwargs)
 
 	@property
 	def simple(self):
-		self._estatus = self.archive_one()
+		return self.archive_one()
 
 	@property
 	def multiple(self):
-		self._estatus = self.archive_many()
-		return self._estatus
+		return self.archive_many()
 
 	
 # Lista de ficheros
@@ -68,6 +66,9 @@ ficheros = [
 	{'nombre': 'apache1.zip', 'archivo': r'C:/apache-maven-3.2.5-bin.zip'},
 	{'nombre': 'apache2.pdf', 'archivo': r'C:/ORGANIGRAMA_FORTIS.pdf'}
 ]
+file_name = 'C:/apache-maven-3.2.5-bin.zip'
 
+upload = UploadFile(file_names=file_name).simple
+print(upload)
 upload = UploadFile(file_names=ficheros).multiple
 print(upload)
