@@ -62,8 +62,8 @@ class UploadFile(Base):
 # Lista de ficheros
 ficheros = [
 	{'nombre': 'apache1.zip', 'archivo': r'C:/apache-maven-3.2.5-bin.zip'},
-	{'nombre': 'apache2.zip', 'archivo': r'C:/apache-maven-3.3.1-bin.zip'}
+	{'nombre': 'apache2.pdf', 'archivo': r'C:/ORGANIGRAMA_FORTIS.pdf'}
 ]
 
-upload = UploadFile(file_names=files).data
+upload = UploadFile(file_names=ficheros).data
 print(upload)
