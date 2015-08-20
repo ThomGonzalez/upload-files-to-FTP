@@ -7,6 +7,7 @@ class Base(object):
 	def __init__(self, **kwargs):
 		self._pathfile = kwargs.get('pathfile')
 		self._directorio = kwargs.get('directorio')
+		self._directorios = kwargs.get('directorios')
 
 	def zipfile_one(self):
 		''' Comprime solo un archivo. '''
@@ -34,8 +35,17 @@ class Base(object):
 		return self._directorio['zip_file']
 
 	def zipfile_manydir(self):
-		pass
-
+		for item in self._directorios:
+			zipf = zipfile.ZipFile(item['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
+			root_len = len(os.path.abspath(item['dir']))
+			for root, dirs, files in os.walk(item['dir']):
+				archive_root = os.path.abspath(root)[root_len:]
+				for f in files:
+					fullpath = os.path.join(root, f)
+					archive_name = os.path.join(archive_root, f)
+					zipf.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
+		zipf.close()
+		return True
 
 class GenerateZip(Base):
 	
@@ -63,10 +73,10 @@ directorios = [
 	{'dir':'C:\BDRH', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test2.zip'},
 ]
 
-zipp = GenerateZip(pathfile=path).file
-print(zipp)
-zipp = GenerateZip(directorio=dir_zip).filedir
-print(zipp)
+#zipp = GenerateZip(pathfile=path).file
+#print(zipp)
+#zipp = GenerateZip(directorio=dir_zip).filedir
+#print(zipp)
 zipp = GenerateZip(directorios=directorios).manydir
 print(zipp)
 
