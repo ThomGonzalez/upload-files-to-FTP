@@ -35,6 +35,7 @@ class Base(object):
 		return self._directorio['zip_file']
 
 	def zipfile_manydir(self):
+		''' Zip comprime lista de directorios '''
 		for item in self._directorios:
 			zipf = zipfile.ZipFile(item['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
 			root_len = len(os.path.abspath(item['dir']))
