@@ -1,6 +1,7 @@
 # -*- coding: cp1252 -*-
 import ftplib
 import os
+import zipfile
 
 
 class Base(object):
@@ -47,6 +48,14 @@ class Base(object):
 			print('No se ha podido encontrar el fichero: '+fichero['nombre'])
 		return True
 
+
+class ZipFile(object):
+
+	def compact(self, path=None, nombre=None):
+		zipf = zipfile.ZipFile(nombre, 'w', zipfile.ZIP_DEFLATED)
+		zipf.write(path)
+		zipf.close()
+
 class UploadFile(Base):
 
 	_estatus = None
@@ -65,5 +74,12 @@ ficheros = [
 	{'nombre': 'apache2.pdf', 'archivo': r'C:/ORGANIGRAMA_FORTIS.pdf'}
 ]
 
-upload = UploadFile(file_names=ficheros).data
-print(upload)
+#upload = UploadFile(file_names=ficheros).data
+#print(upload)
+zip_file = ZipFile()
+
+
+nombre = 'ejemplo.zip'
+path = os.path.abspath('C:\CFDI\SAT\cadenaoriginal_3_2013.xslt')
+
+zip_file.compact(path=path, nombre=nombre)
