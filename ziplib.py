@@ -4,13 +4,13 @@ import zipfile
 
 class Base(object):	
 
-	def __init__(self, path=None):
-		self._path = path
+	def __init__(self, path_file=None):
+		self.path_file = path_file
 
 	def zip_one(self):
 		''' Comprime solo un archivo. '''
 		zipf = zipfile.ZipFile('ejemplo.zip', 'w', zipfile.ZIP_DEFLATED)
-		zipf.write(self._path)
+		zipf.write(self.path_file)
 		zipf.close()
 		return True
 
@@ -40,8 +40,8 @@ class GenerateZip(Base):
 		return self.zip_one()
 
 
-path = os.path.abspath("C:\CFDI\CSD")
+path_file = "C:\CFDI_JAVA\CFDI-DEMO.xml"
 #self.simple(path=path, nombre=nombre)
 #self.zipper(dir='C:\CFDI_JAVA', zip_file='C:/zipfile/test.zip')
-zipp = GenerateZip(path=path).simple
+zipp = GenerateZip(path_file=path_file).simple
 print(zipp)
