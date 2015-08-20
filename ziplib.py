@@ -8,7 +8,7 @@ class Base(object):
 		self._pathfile = kwargs.get('pathfile')
 		self._directorio = kwargs.get('directorio')
 
-	def zip_one(self):
+	def zipfile_one(self):
 		''' Comprime solo un archivo. '''
 		self.nombre = self._pathfile[0]
 		self.dir = self._pathfile[1]
@@ -17,7 +17,10 @@ class Base(object):
 		zipf.close()
 		return True
 
-	def zip_dir(self):
+	def zipfile_many(self):
+		pass
+
+	def zipfile_dir(self):
 		''' Zip directorios de forma recursiva '''
 		zipf = zipfile.ZipFile(self._directorio['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(self._directorio['dir']))
@@ -26,10 +29,12 @@ class Base(object):
 			for f in files:
 				fullpath = os.path.join(root, f)
 				archive_name = os.path.join(archive_root, f)
-				print(f)
 				zipf.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
 		zipf.close()
 		return self._directorio['zip_file']
+
+	def zipfile_manydir(self):
+		pass
 
 
 class GenerateZip(Base):
@@ -38,18 +43,31 @@ class GenerateZip(Base):
 		super(GenerateZip, self).__init__(**kwargs)
 
 	@property		
-	def simple(self):
-		return self.zip_one()
+	def file(self):
+		return self.zipfile_one()
 
 	@property	
-	def directorios(self):
-		return self.zip_dir()
+	def filedir(self):
+		return self.zipfile_dir()
+
+	@property
+	def manydir(self):
+	    return self.zipfile_manydir()
+	
 
 
-path_file = ('ejemplo.zip', 'C:\CFDI_JAVA\CFDI-DEMO.xml')
-directorio = {'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test.zip'}
+path = ('ejemplo.zip', 'C:\CFDI_JAVA\CFDI-DEMO.xml')
+dir_zip = {'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test.zip'}
+directorios = [
+	{'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test1.zip'},
+	{'dir':'C:\BDRH', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test2.zip'},
+]
 
-zipp = GenerateZip(pathfile=path_file).simple
+zipp = GenerateZip(pathfile=path).file
 print(zipp)
-zipp = GenerateZip(directorio=directorio).directorios
+zipp = GenerateZip(directorio=dir_zip).filedir
 print(zipp)
+zipp = GenerateZip(directorios=directorios).manydir
+print(zipp)
+
+
