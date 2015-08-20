@@ -4,17 +4,19 @@ import zipfile
 
 class Base(object):	
 
-	def __init__(self, path_file=None):
-		self.path_file = path_file
-
+	def __init__(self, **kwargs):
+		self._pathfile = kwargs.get('pathfile')
+		
 	def zip_one(self):
 		''' Comprime solo un archivo. '''
-		zipf = zipfile.ZipFile('ejemplo.zip', 'w', zipfile.ZIP_DEFLATED)
-		zipf.write(self.path_file)
+		self.nombre = self._pathfile[0]
+		self.path = self._pathfile[1]
+		zipf = zipfile.ZipFile(self.nombre, 'w', zipfile.ZIP_DEFLATED)
+		zipf.write(self.path)
 		zipf.close()
 		return True
 
-	def zipper(self, dir=None, zip_file=None):
+	def zip_dir(self, dir=None, zip_file=None):
 		''' Zip directorios de forma recursiva '''
 		zipf = zipfile.ZipFile(zip_file, 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(dir))
@@ -39,9 +41,15 @@ class GenerateZip(Base):
 	def simple(self):
 		return self.zip_one()
 
+	@property	
+	def directorios(self):
+		return self.zip_dir()
 
-path_file = "C:\CFDI_JAVA\CFDI-DEMO.xml"
-#self.simple(path=path, nombre=nombre)
-#self.zipper(dir='C:\CFDI_JAVA', zip_file='C:/zipfile/test.zip')
-zipp = GenerateZip(path_file=path_file).simple
+
+path_file = ('ejemplo.zip', 'C:\CFDI_JAVA\CFDI-DEMO.xml')
+path_files = {'dir':'C:\CFDI_JAVA', 'zip_file':'C:/zipfile/test.zip'}
+
+zipp = GenerateZip(pathfile=path_file).simple
 print(zipp)
+#zipp = GenerateZip(path_files=path_files).directorios
+#print(zipp)
