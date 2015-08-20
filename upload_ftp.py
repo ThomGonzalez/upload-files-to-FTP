@@ -1,13 +1,9 @@
 # -*- coding: cp1252 -*-
 import ftplib
 import os
-import zipfile
-
 
 class Base(object):
-	'''
-	Datos FTP para subir archivos al servidor.
-	'''
+	''' Datos FTP para subir archivos al servidor.'''
 	_ftp_servidor = 'server'
 	_ftp_usuario = 'user'
 	_ftp_password = 'pass'
@@ -24,7 +20,7 @@ class Base(object):
 		except:
 			print('No se ha podido conectar al servidor: '+self._ftp_servidor)
 
-	def simple_upload(self):
+	def archive_one(self):
 		try:
 			files = open(self.file_names, 'rb')
 			self.server.cwd(self._ftp_raiz)
@@ -33,28 +29,22 @@ class Base(object):
 			self.server.quit()
 		except:
 			print('No se ha podido encontrar el fichero: '+self.file_names)
+			return False
 		return True 
 
-	def multiple_upload(self):
+	def archive_many(self):
 		try:
 			for fichero in self.file_names:
 				files = open(fichero['archivo'], 'rb')
 				self.server.cwd(self._ftp_raiz)
 				self.server.storbinary('STOR '+fichero['nombre'], files)
 				files.close()
-
 			self.server.quit()
 		except:
 			print('No se ha podido encontrar el fichero: '+fichero['nombre'])
+			return False
 		return True
 
-
-class ZipFile(object):
-
-	def compact(self, path=None, nombre=None):
-		zipf = zipfile.ZipFile(nombre, 'w', zipfile.ZIP_DEFLATED)
-		zipf.write(path)
-		zipf.close()
 
 class UploadFile(Base):
 
@@ -62,11 +52,16 @@ class UploadFile(Base):
 
 	def __init__(self, **kwargs):
 		super(UploadFile, self).__init__(**kwargs)
-		self._estatus = self.multiple_upload()
 
 	@property
-	def data(self):
-	    return self._estatus
+	def simple(self):
+		self._estatus = self.archive_one()
+
+	@property
+	def multiple(self):
+		self._estatus = self.archive_many()
+		return self._estatus
+
 	
 # Lista de ficheros
 ficheros = [
@@ -74,12 +69,5 @@ ficheros = [
 	{'nombre': 'apache2.pdf', 'archivo': r'C:/ORGANIGRAMA_FORTIS.pdf'}
 ]
 
-#upload = UploadFile(file_names=ficheros).data
-#print(upload)
-zip_file = ZipFile()
-
-
-nombre = 'ejemplo.zip'
-path = os.path.abspath('C:\CFDI\SAT\cadenaoriginal_3_2013.xslt')
-
-zip_file.compact(path=path, nombre=nombre)
+upload = UploadFile(file_names=ficheros).multiple
+print(upload)
