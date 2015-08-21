@@ -1,5 +1,5 @@
 from libs.ziplib import GenerateZip
-from upload_files_ftp import UploadFile
+from client_ftp import UploadFile
 
 
 class Backup(object):
