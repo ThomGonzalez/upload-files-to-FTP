@@ -1,5 +1,5 @@
-import os
 import zipfile
+import os
 
 
 class Base(object):	
@@ -48,6 +48,7 @@ class Base(object):
 		zipf.close()
 		return True
 
+
 class GenerateZip(Base):
 	
 	def __init__(self, **kwargs):
@@ -65,20 +66,18 @@ class GenerateZip(Base):
 	def manydir(self):
 	    return self.zipfile_manydir()
 	
+# Documentación 
+# Generar zip con un archivo.
+#path = ('test.zip', 'C:\JAVA\DEMO.xml')
+#zipper = GenerateZip(pathfile=path).file
 
+# Generar zip con un direcctorio
+#dir_zip = {'dir':'C:\JAVA', 'zip_file':'C:/Users/thomgonzalez/test.zip'}
+#zipper = GenerateZip(directorio=dir_zip).filedir
 
-path = ('ejemplo.zip', 'C:\CFDI_JAVA\CFDI-DEMO.xml')
-dir_zip = {'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test.zip'}
-directorios = [
-	{'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test1.zip'},
-	{'dir':'C:\BDRH', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test2.zip'},
-]
-
-#zipp = GenerateZip(pathfile=path).file
-#print(zipp)
-#zipp = GenerateZip(directorio=dir_zip).filedir
-#print(zipp)
-zipp = GenerateZip(directorios=directorios).manydir
-print(zipp)
-
-
+# Generar zip con varios directorios.
+#directorios = [
+#	{'dir':'C:\JAVA', 'zip_file':'C:/Users/thomgonzalez/test1.zip'},
+#	{'dir':'C:\BDRH', 'zip_file':'C:/Users/thomgonzalez/test2.zip'},
+#]
+#zipper = GenerateZip(directorios=directorios).manydir
