@@ -1,5 +1,6 @@
 # -*- coding: cp1252 -*-
 import ftplib
+from libs.ziplib import GenerateZip
 import os
 
 
@@ -72,3 +73,12 @@ upload = UploadFile(file_names=file_name).simple
 print(upload)
 upload = UploadFile(file_names=ficheros).multiple
 print(upload)
+
+
+# Generar zip con varios directorios.
+directorios = [
+	{'dir':'C:\CFDI_JAVA', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test1.zip'},
+	{'dir':'C:\BDRH', 'zip_file':'C:/Users/TomaS/repositorio/thomgonzalez/Upload-Files-to-FTP/test2.zip'},
+]
+zipper = GenerateZip(directorios=directorios).manydir
+print(zipper)
