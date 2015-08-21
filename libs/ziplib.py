@@ -66,10 +66,10 @@ class GenerateZip(Base):
 	def manydir(self):
 	    return self.zipfile_manydir()
 	
-# Documentación 
+'''' Documentación '''
 # Generar zip con un archivo.
-path = ('test.zip', 'C:\CFDI_JAVA\CFDI-DEMO.xml')
-zipper = GenerateZip(pathfile=path).file
+#path = ('test.zip', 'C:\JAVA\DEMO.xml')
+#zipper = GenerateZip(pathfile=path).file
 
 # Generar zip con un direcctorio
 #dir_zip = {'dir':'C:\JAVA', 'zip_file':'C:/Users/thomgonzalez/test.zip'}
