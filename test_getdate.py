@@ -1,6 +1,7 @@
 import os.path, time
 from time import ctime
 
+
 class Base(object):
 	
 	_file = None
@@ -22,12 +23,17 @@ class Base(object):
 		date_modified = time.ctime(os.path.getmtime(self._ruta))
 		return date_modified
 
+
 class ReadFiles(Base):
-	pass
+
+	def __init__(self, **args):
+		super(ReadFiles, self).__init__(**args)
+		
+	@property
+	def data(self):
+	    return self.creation_date()
+	
 
 ruta_file=r'C:/Users/BlackStar/Pictures/logo.jpg'
-files = ReadFiles(ruta=ruta_file).creation_date()
+files = ReadFiles(ruta=ruta_file).data
 print(files)
-
-
-
