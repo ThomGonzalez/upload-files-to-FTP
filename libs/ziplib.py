@@ -1,8 +1,12 @@
-import zipfile
+import sys
 import os
+import zipfile
+
 
 
 class Base(object):	
+	
+	_directorios = []
 
 	def __init__(self, **kwargs):
 		self._pathfile = kwargs.get('pathfile')
@@ -35,18 +39,27 @@ class Base(object):
 		return self._directorio['zip_file']
 
 	def zipfile_manydir(self):
-		''' Zip comprime lista de directorios '''
-		for item in self._directorios:
-			zipf = zipfile.ZipFile(item['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
-			root_len = len(os.path.abspath(item['dir']))
-			for root, dirs, files in os.walk(item['dir']):
-				archive_root = os.path.abspath(root)[root_len:]
-				for f in files:
-					fullpath = os.path.join(root, f)
-					archive_name = os.path.join(archive_root, f)
-					zipf.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
-		zipf.close()
-		return True
+		try:
+			""" 
+			Método comprime archivos .zip de lista de directorios.
+			"""
+			for item in self._directorios:
+				zipf = zipfile.ZipFile(item['zip_file'], 'w', zipfile.ZIP_DEFLATED, allowZip64=True)
+				root_len = len(os.path.abspath(item['dir']))
+				for root, dirs, files in os.walk(item['dir']):
+					archive_root = os.path.abspath(root)[root_len:]
+					for f in files:
+						fullpath = os.path.join(root, f)
+						archive_name = os.path.join(archive_root, f)
+						zipf.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
+						print('ruta ',root)
+						print(f)
+			zipf.close()
+			return True
+		except Exception as e:
+			error = {'message': e.args}
+			print('error', error['message'])
+			return False
 
 
 class GenerateZip(Base):
