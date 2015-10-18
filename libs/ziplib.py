@@ -12,8 +12,8 @@ class Base(object):
 		self._directorio = kwargs.get('directorio')
 		self._directorios = kwargs.get('directorios')
 
+	#Comprime solo un archivo.
 	def zipfile_one(self):
-		#Comprime solo un archivo.
 		self.nombre = self._pathfile[0]
 		self.dir = self._pathfile[1]
 		zipf = zipfile.ZipFile(self.nombre, 'w', zipfile.ZIP_DEFLATED)
@@ -24,8 +24,8 @@ class Base(object):
 	def zipfile_many(self):
 		pass
 
+	#Zip directorios de forma recursiva
 	def zipfile_dir(self):
-		#Zip directorios de forma recursiva
 		zipf = zipfile.ZipFile(self._directorio['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(self._directorio['dir']))
 		for root, dirs, files in os.walk(self._directorio['dir']):
@@ -77,19 +77,3 @@ class GenerateZip(Base):
 	@property
 	def manydir(self):
 	    return self.zipfile_manydir()
-	
-'''' Documentación '''
-# Generar zip con un archivo.
-#path = ('test.zip', 'C:\JAVA\DEMO.xml')
-#zipper = GenerateZip(pathfile=path).file
-
-# Generar zip con un direcctorio
-#dir_zip = {'dir':'C:\JAVA', 'zip_file':'C:/Users/thomgonzalez/test.zip'}
-#zipper = GenerateZip(directorio=dir_zip).filedir
-
-# Generar zip con varios directorios.
-#directorios = [
-#	{'dir':'C:\JAVA', 'zip_file':'C:/Users/thomgonzalez/test1.zip'},
-#	{'dir':'C:\BDRH', 'zip_file':'C:/Users/thomgonzalez/test2.zip'},
-#]
-#zipper = GenerateZip(directorios=directorios).manydir
