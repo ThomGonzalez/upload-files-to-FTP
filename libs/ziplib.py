@@ -13,7 +13,7 @@ class Base(object):
 		self._directorios = kwargs.get('directorios')
 
 	#Comprime solo un archivo.
-	def zipfile_one(self):
+	def fileZip(self):
 		self.nombre = self._pathfile[0]
 		self.dir = self._pathfile[1]
 		zipf = zipfile.ZipFile(self.nombre, 'w', zipfile.ZIP_DEFLATED)
@@ -21,11 +21,8 @@ class Base(object):
 		zipf.close()
 		return True
 
-	def zipfile_many(self):
-		pass
-
 	#Zip directorios de forma recursiva
-	def zipfile_dir(self):
+	def directoryZip(self):
 		zipf = zipfile.ZipFile(self._directorio['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(self._directorio['dir']))
 		for root, dirs, files in os.walk(self._directorio['dir']):
@@ -40,7 +37,7 @@ class Base(object):
 	""" 
 	Método comprime archivos .zip de lista de directorios.
 	"""
-	def zipfile_manydir(self):
+	def manyDirectoryZip(self):
 		try:
 			for item in self._directorios:
 				zipf = zipfile.ZipFile(item['zip_file'], 'w', zipfile.ZIP_DEFLATED, allowZip64=True)
@@ -68,12 +65,12 @@ class GenerateZip(Base):
 
 	@property		
 	def file(self):
-		return self.zipfile_one()
+		return self.fileZip()
 
 	@property	
-	def filedir(self):
-		return self.zipfile_dir()
+	def directory(self):
+		return self.directoryZip()
 
 	@property
-	def manydir(self):
-	    return self.zipfile_manydir()
+	def directories(self):
+	    return self.manyDirectoryZip()
