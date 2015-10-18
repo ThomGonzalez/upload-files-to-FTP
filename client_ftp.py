@@ -4,7 +4,9 @@ import os
 
 
 class Base(object):
-	''' Datos FTP para subir archivos al servidor.'''
+	"""
+	Datos FTP para subir archivos al servidor y conexion.
+	"""
 	_ftp_servidor = 'server'
 	_ftp_usuario = 'user'
 	_ftp_password = 'pass'
@@ -15,9 +17,10 @@ class Base(object):
 		self.conexion()
 
 	def conexion(self):
-		''' Conectamos con el servidor '''
 		try:
-			self.server = ftplib.FTP(self._ftp_servidor, self._ftp_usuario, self._ftp_password)
+			self.server = ftplib.FTP(self._ftp_servidor,
+									self._ftp_usuario,
+									self._ftp_password)
 		except:
 			print('No se ha podido conectar al servidor: '+self._ftp_servidor)
 
@@ -60,7 +63,3 @@ class UploadFile(Base):
 	def multiple(self):
 		return self.archive_many()
 
-''' Doc '''
-# Subir un archivo al servidor
-#file_name = 'C:/test.zip'
-#upload = UploadFile(file_names=file_name).simple
