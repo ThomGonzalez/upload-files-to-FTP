@@ -4,7 +4,7 @@ from client_ftp import UploadFile
 
 class Backup(object):
 
-	def toserver(self):
+	def executeBackups(self):
 
 		_BACKUPS = 'C:/backups/'
 
@@ -27,4 +27,4 @@ class Backup(object):
 			if upload:
 				print('Respaldo Finalizado : ', upload)
 
-backup = Backup().toserver()
+backup = Backup().executeBackups()
