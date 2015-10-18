@@ -56,7 +56,7 @@ class UploadFile(Base):
 		super(UploadFile, self).__init__(**kwargs)
 
 	@property
-	def simple(self):
+	def default(self):
 		return self.archive()
 
 	@property
