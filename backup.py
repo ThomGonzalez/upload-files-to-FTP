@@ -1,6 +1,6 @@
 from libs.ziplib import GenerateZip
 from client_ftp import UploadFile
-
+from logger import Log
 
 class Backup(object):
 
@@ -9,18 +9,18 @@ class Backup(object):
 		_BACKUPS = 'C:/backups/'
 
 		data = [
-			{ 'dir':'Y:', 'zip_file':''+_BACKUPS+'cfdi.zip'},
-			{ 'dir':'X:', 'zip_file':''+_BACKUPS+'mssql.zip'},
+			{ 'ruta':'C:/test1', 'nombreArchivo': _BACKUPS+'test1.zip'},
+			{ 'ruta':'C:/test2', 'nombreArchivo': _BACKUPS+'test2.zip'},
 		]
 
 		zipper = GenerateZip(directorios=data).directories
 		if zipper:
-			print('Generación archivos ZIP Finalizado : ', zipper)
+			Log(message='ZIP: Se generaron los archivos correctamente.')
 
 			_RUTA = 'C:/backups/'
 			ficheros = [
-				{'nombre': 'backup-cfdi.zip', 'archivo': r''+_RUTA+'cfdi.zip'},
-				{'nombre': 'backup-mssql.zip', 'archivo': r''+_RUTA+'mssql.zip'},
+				{'nombre': 'test1.zip', 'archivo': r''+_RUTA+'test1.zip'},
+				{'nombre': 'test2.zip', 'archivo': r''+_RUTA+'test2.zip'},
 			]
 
 			upload = UploadFile(file_names=ficheros).multiple
