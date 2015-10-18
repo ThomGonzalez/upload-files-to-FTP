@@ -8,12 +8,12 @@ class Backup(object):
 
 		_BACKUPS = 'C:/backups/'
 
-		directorios = [
+		data = [
 			{ 'dir':'Y:', 'zip_file':''+_BACKUPS+'cfdi.zip'},
 			{ 'dir':'X:', 'zip_file':''+_BACKUPS+'mssql.zip'},
 		]
 
-		zipper = GenerateZip(directorios=directorios).manydir
+		zipper = GenerateZip(directorios=data).directories
 		if zipper:
 			print('Generación archivos ZIP Finalizado : ', zipper)
 
