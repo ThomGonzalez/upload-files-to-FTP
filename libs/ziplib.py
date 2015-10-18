@@ -3,7 +3,6 @@ import os
 import zipfile
 
 
-
 class Base(object):	
 	
 	_directorios = []
@@ -14,7 +13,7 @@ class Base(object):
 		self._directorios = kwargs.get('directorios')
 
 	def zipfile_one(self):
-		''' Comprime solo un archivo. '''
+		#Comprime solo un archivo.
 		self.nombre = self._pathfile[0]
 		self.dir = self._pathfile[1]
 		zipf = zipfile.ZipFile(self.nombre, 'w', zipfile.ZIP_DEFLATED)
@@ -26,7 +25,7 @@ class Base(object):
 		pass
 
 	def zipfile_dir(self):
-		''' Zip directorios de forma recursiva '''
+		#Zip directorios de forma recursiva
 		zipf = zipfile.ZipFile(self._directorio['zip_file'], 'w', compression=zipfile.ZIP_DEFLATED)
 		root_len = len(os.path.abspath(self._directorio['dir']))
 		for root, dirs, files in os.walk(self._directorio['dir']):
@@ -38,11 +37,11 @@ class Base(object):
 		zipf.close()
 		return self._directorio['zip_file']
 
+	""" 
+	Método comprime archivos .zip de lista de directorios.
+	"""
 	def zipfile_manydir(self):
 		try:
-			""" 
-			Método comprime archivos .zip de lista de directorios.
-			"""
 			for item in self._directorios:
 				zipf = zipfile.ZipFile(item['zip_file'], 'w', zipfile.ZIP_DEFLATED, allowZip64=True)
 				root_len = len(os.path.abspath(item['dir']))
