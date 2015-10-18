@@ -9,7 +9,7 @@
 ##### Subir un archivo al servidor
 Ejemplo:<br> 
 file_name = 'C:/test.zip' <br>
-upload = UploadFile(file_names=file_name).simple <br>
+upload = UploadFile(file_names=file_name).default <br>
 
 ##### Generar archivos en .ZIP
 1. Un archivo. <br>
@@ -18,11 +18,11 @@ upload = UploadFile(file_names=file_name).simple <br>
 
 2. Un directorio. <br>
   dir = {'dir':'C:\test', 'zip_file':'C:/thomgonzalez/test.zip'}  <br>
-  zipper = GenerateZip(directorio=dir).filedir  <br>
+  zipper = GenerateZip(directorio=dir).directory <br>
 
 3. Varios directorios en una lista. <br>
   directorios = [ <br>
       {'dir':'C:\test', 'zip_file':'C:/thomgonzalez/test1.zip'}, <br>
       {'dir':'C:\test1', 'zip_file':'C:/thomgonzalez/test2.zip'}, <br>
   ] <br>
-  zipper = GenerateZip(directorios=directorios).manydir  <br>
+  zipper = GenerateZip(directorios=directorios).directories <br>
