@@ -1,5 +1,11 @@
 
 class Log(object):
+	
+	_message = None
+
+	def __init__(self, message):
+		self._message = message
+		self.existWriteFile()
 
 	def readFile(self):
 		try:
@@ -44,7 +50,7 @@ class Log(object):
 			# sino que crea un nuevo archivo si es necesario.
 			logfile = open("log.txt", "a")
 			try:
-				logfile.write('log ')
+				logfile.write(self._message+' \n')
 			finally:
 				logfile.close()
 		except IOError:
