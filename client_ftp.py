@@ -24,7 +24,7 @@ class Base(object):
 		except:
 			print('No se ha podido conectar al servidor: '+self._ftp_servidor)
 
-	def archive_one(self):
+	def archive(self):
 		try:
 			files = open(self.file_names, 'rb')
 			self.server.cwd(self._ftp_raiz)
@@ -36,7 +36,7 @@ class Base(object):
 			return False
 		return True 
 
-	def archive_many(self):
+	def archives(self):
 		try:
 			for fichero in self.file_names:
 				files = open(fichero['archivo'], 'rb')
@@ -57,9 +57,9 @@ class UploadFile(Base):
 
 	@property
 	def simple(self):
-		return self.archive_one()
+		return self.archive()
 
 	@property
 	def multiple(self):
-		return self.archive_many()
+		return self.archives()
 
