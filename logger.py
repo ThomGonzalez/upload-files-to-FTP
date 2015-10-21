@@ -1,3 +1,5 @@
+from utils import CurrentDate
+
 
 class Log(object):
 	
@@ -50,7 +52,8 @@ class Log(object):
 			# sino que crea un nuevo archivo si es necesario.
 			logfile = open("log.txt", "a")
 			try:
-				logfile.write(self._message+' \n')
+				date = CurrentDate().getDate()
+				logfile.write(self._message+' Fecha: %s \n' % str(date))
 			finally:
 				logfile.close()
 		except IOError:
