@@ -1,6 +1,7 @@
 # -*- coding: cp1252 -*-
 from libs import ftplib
 import os
+from logger import Log
 
 
 class Base(object):
@@ -22,7 +23,8 @@ class Base(object):
 									self._ftp_usuario,
 									self._ftp_password)
 		except:
-			print('No se ha podido conectar al servidor: '+self._ftp_servidor)
+			message = 'FTP: No se ha podido conectar al servidor.'
+			Log(message=message+self._ftp_servidor)
 
 	def archive(self):
 		try:
@@ -32,7 +34,8 @@ class Base(object):
 			files.close()
 			self.server.quit()
 		except:
-			print('No se ha podido encontrar el fichero: '+self.file_names)
+			message = 'No se ha podido encontrar el fichero'
+			Log(message=message+self.file_names)
 			return False
 		return True 
 
@@ -45,7 +48,8 @@ class Base(object):
 				files.close()
 			self.server.quit()
 		except:
-			print('No se ha podido encontrar el fichero: '+fichero['nombre'])
+			message = 'No se ha podido encontrar el fichero'
+			Log(message=message+fichero['nombre'])
 			return False
 		return True
 
