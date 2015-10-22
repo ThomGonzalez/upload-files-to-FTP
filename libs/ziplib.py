@@ -51,11 +51,13 @@ class Base(object):
 						print('ruta: ',root)
 						print(f)
 			zipf.close()
-			return True
+			return {'is_valid': True}
 		except Exception as e:
-			error = {'message': e.args}
-			print('error', error['message'])
-			return False
+			response = {
+				'error': e.args,
+				'is_valid': False
+			}
+			return response
 
 
 class GenerateZip(Base):
