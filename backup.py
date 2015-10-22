@@ -14,8 +14,9 @@ class Backup(object):
 		]
 
 		zipper = GenerateZip(directorios=data).directories
-		if zipper:
-			Log(message='ZIP: Se generaron los archivos correctamente.')
+		if zipper['is_valid']:
+			message = 'ZIP: Se generaron los archivos correctamente.'
+			Log(message=message)
 
 			_RUTA = 'C:/backups/'
 			ficheros = [
@@ -25,6 +26,7 @@ class Backup(object):
 
 			upload = UploadFile(file_names=ficheros).multiple
 			if upload:
-				print('Respaldo Finalizado : ', upload)
+				Log(message='Respaldo finalizado.')
 
+				
 backup = Backup().executeBackups()
